@@ -1,0 +1,11 @@
+# Do not edit - changes here will be overwritten by Copier
+_commit: v1
+_src_path: gh:pydev-guide/pyrepo-copier
+author_email: spencer.j.rothfuss@vanderbilt.edu
+author_name: Spencer J Rothfuss
+github_username: teamtomo
+mode: tooling
+module_name: torch_rotate_image
+project_name: torch-rotate-image
+project_short_description: A package to rotate images in Fourier space.
+
