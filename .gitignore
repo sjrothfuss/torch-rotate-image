@@ -110,5 +110,6 @@ ENV/
 .vscode/
 .idea/
 
-# Figures for debugging
+# Debug files
 figures/
+*.ipynb
