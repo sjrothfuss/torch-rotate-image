@@ -6,4 +6,4 @@
 [![CI](https://github.com/teamtomo/torch-rotate-image/actions/workflows/ci.yml/badge.svg)](https://github.com/teamtomo/torch-rotate-image/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/teamtomo/torch-rotate-image/branch/main/graph/badge.svg)](https://codecov.io/gh/teamtomo/torch-rotate-image)
 
-A package to rotate images in Fourier space.
+A package to rotate images with torch space.
