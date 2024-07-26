@@ -11,7 +11,7 @@ def test_rotate_image_2d_shape():
 
 def test_rotate_image_2d_rotation():
     image = torch.zeros(28, 28)
-    image[:14, :] = 1  # image is hafl black, half white
-    angles = torch.tensor([0.0, 90.0])
+    image[:14, :] = 1  # image is half black, half white
+    angles = torch.tensor([0.0, 180.0])
     rotated_image = rotate_image_2d(image, angles)
-    assert rotated_image[0] == image and rotated_image[1] == image.flip(0)
+    assert (rotated_image[0] == image) and (rotated_image[1] == image.flip(0))
