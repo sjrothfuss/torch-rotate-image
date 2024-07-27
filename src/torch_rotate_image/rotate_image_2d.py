@@ -31,8 +31,10 @@ def rotate_image_2d(image: torch.Tensor, angles: float | torch.Tensor) -> torch.
     # (..., h, w, 2, 1) target shape for rotated output grid
     rotated_coords = rotation_matrices @ grid  # (..., h, w, 2, 1)
     rotated_coords = einops.rearrange(rotated_coords, "... h w yx 1 -> ... h w yx")
-    rotated_coords += center
-    rotated_images = sample_image_2d(image=image, coordinates=rotated_coords)  # (..., h, w)
+    rotated_coords += torch.tensor(center, device=image.device)
+    rotated_images = sample_image_2d(
+        image=image, coordinates=rotated_coords
+    )  # (..., h, w)
     return rotated_images
 
 
