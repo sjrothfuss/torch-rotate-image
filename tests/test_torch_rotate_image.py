@@ -14,6 +14,5 @@ def test_rotate_image_2d_shape():
 def test_rotate_image_2d_rotation():
     image = torch.zeros(28, 28)
     image[:14, :] = 1  # image is half black, half white
-    angles = torch.tensor([180.0])
-    rotated_image = rotate_image_2d(image, angles)
+    rotated_image = rotate_image_2d(image=image, angles=180.0)
     assert torch.allclose(rotated_image, image.flip(0), atol=TOLERANCE)

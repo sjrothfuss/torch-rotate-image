@@ -20,10 +20,12 @@ def rotate_image_2d(image: torch.Tensor, angles: float | torch.Tensor) -> torch.
         Rotated image. Shape is `(..., h, w)`.
     """
 
+    if isinstance(angles, float):
+        angles = torch.tensor([angles], device=image.device)
     h, w = image.shape[-2:]
     center = (h // 2, w // 2)
+
     grid = coordinate_grid(image_shape=(h, w), center=center, device=image.device)
-    # TODO make angles a Tensor
     rotation_matrices = _rotation_matrix_from_angles(angles)  # (..., 2, 2)
     # Prepare for broadcasting
     grid = einops.rearrange(grid, "h w yx -> h w yx 1")
