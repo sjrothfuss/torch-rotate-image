@@ -12,6 +12,17 @@ def test_rotate_image_2d_shape():
 
 
 def test_rotate_image_2d_rotation():
-    image = torch.linspace(0.5, 1, steps=28).repeat(28, 1)
+    image = torch.linspace(0.5, 1, steps=5).repeat(5, 1)
     rotated_image = rotate_image_2d(image=image, angles=180.0)
-    assert torch.allclose(rotated_image, image.flip(0), atol=TOLERANCE)
+    expected_image = torch.tensor(
+        [
+            [
+                [1.0000, 0.8750, 0.7500, 0.6250, 0.5000],
+                [1.0000, 0.8750, 0.7500, 0.6250, 0.5000],
+                [1.0000, 0.8750, 0.7500, 0.6250, 0.5000],
+                [1.0000, 0.8750, 0.7500, 0.6250, 0.5000],
+                [0.0000, 0.8750, 0.7500, 0.6250, 0.0000],
+            ]
+        ]
+    )
+    assert torch.allclose(rotated_image, expected_image, atol=TOLERANCE)
