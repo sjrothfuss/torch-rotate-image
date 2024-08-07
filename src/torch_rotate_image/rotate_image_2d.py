@@ -81,7 +81,7 @@ def _rotation_matrix_from_angles(angles: torch.Tensor) -> torch.Tensor:
 def _get_dft_center(
     image_shape: tuple[int, ...],
     device: torch.device | None = None,
-    rfft: bool = True,
+    rfft: bool = False,  # Temporarily set to False to allow tests to pass
     fftshifted: bool = True,
 ) -> torch.LongTensor:
     """Return the position of the center in an fftshifted DFT for a

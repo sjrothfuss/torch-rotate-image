@@ -31,5 +31,5 @@ def test_rotate_image_2d_rotation():
 
 def test_get_dft_center():
     h, w = 10, 10
-    center = _get_dft_center(image_shape=(h, w), device=torch.device("cpu"))
+    center = _get_dft_center(image_shape=(h, w))
     assert center == (5, 5)
