@@ -94,7 +94,7 @@ def _get_dft_center(
     fft_center = torch.zeros(size=(len(image_shape),), device=device)
     image_shape = torch.as_tensor(image_shape).float()
     if rfft is True:
-        image_shape = torch.tensor(_rfft_shape(image_shape), device=device)
+        image_shape = torch.tensor(_get_rfft_shape(image_shape), device=device)
     if fftshifted is True:
         fft_center = torch.div(image_shape, 2, rounding_mode="floor")
     if rfft is True:
@@ -102,7 +102,7 @@ def _get_dft_center(
     return fft_center.long()
 
 
-def _rfft_shape(input_shape: Sequence[int]) -> tuple[int]:
+def _get_rfft_shape(input_shape: Sequence[int]) -> tuple[int]:
     """Get the output shape of an rfft on an input of input_shape."""
     rfft_shape = list(input_shape)
     rfft_shape[-1] = int((rfft_shape[-1] / 2) + 1)

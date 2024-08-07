@@ -1,5 +1,6 @@
 import torch
 from torch_rotate_image import rotate_image_2d
+from torch_rotate_image.rotate_image_2d import _get_dft_center
 
 TOLERANCE = 1e-6
 
@@ -26,3 +27,9 @@ def test_rotate_image_2d_rotation():
         ]
     )
     assert torch.allclose(rotated_image, expected_image, atol=TOLERANCE)
+
+
+def test_get_dft_center():
+    h, w = 10, 10
+    center = _get_dft_center(image_shape=(h, w), device=torch.device("cpu"))
+    assert center == (5, 5)
