@@ -26,7 +26,7 @@ def rotate_image_2d(image: torch.Tensor, angles: float | torch.Tensor) -> torch.
         angles = torch.tensor([angles], device=image.device)
     h, w = image.shape[-2:]
     # center = torch.tensor([h // 2, w // 2], device=image.device) # Alternative center
-    center = _get_dft_center(image_shape=(h, w), device=image.device)
+    center = _get_dft_center(image_shape=(h, w), device=image.device, rfft=False)
 
     coords = coordinate_grid(
         image_shape=(h, w),
@@ -81,7 +81,7 @@ def _rotation_matrix_from_angles(angles: torch.Tensor) -> torch.Tensor:
 def _get_dft_center(
     image_shape: tuple[int, ...],
     device: torch.device | None = None,
-    rfft: bool = False,  # Temporarily set to False to allow tests to pass
+    rfft: bool = True,
     fftshifted: bool = True,
 ) -> torch.LongTensor:
     """Return the position of the center in an fftshifted DFT for a
