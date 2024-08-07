@@ -13,15 +13,15 @@ def rotate_image_2d(image: torch.Tensor, angles: float | torch.Tensor) -> torch.
     image: torch.Tensor
         2D image to rotate. Shape should be `(h, w)`.
     angles: float | torch.Tensor
-        Float angle or `(..., )` array of float angles in degrees by which to rotate the
-        image.
+        Float angle or `(..., )` array of float angles in degrees by
+        which to rotate the image.
 
     Returns
     -------
     rotated_image: torch.Tensor
         Rotated image. Shape is `(..., h, w)`.
-    """
 
+    """
     if not isinstance(angles, torch.Tensor):
         angles = torch.tensor([angles], device=image.device)
     h, w = image.shape[-2:]
