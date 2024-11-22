@@ -6,4 +6,6 @@
 [![CI](https://github.com/teamtomo/torch-rotate-image/actions/workflows/ci.yml/badge.svg)](https://github.com/teamtomo/torch-rotate-image/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/teamtomo/torch-rotate-image/branch/main/graph/badge.svg)](https://codecov.io/gh/teamtomo/torch-rotate-image)
 
-A package to rotate images with torch space.
+🚧 Currently under development. 🚧
+
+A package to rotate 2D images and 3D volumes with torch.
