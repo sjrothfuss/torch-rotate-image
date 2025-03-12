@@ -57,6 +57,7 @@ dev = [
     "rich",  # https://github.com/Textualize/rich
     "ruff",
     "pytest",
+    "pytest-cov",
 ]
 
 [project.urls]

@@ -21,6 +21,7 @@ Notes
 
 import torch
 import einops
+from typing import Sequence
 from torch_grid_utils import coordinate_grid
 from torch_image_lerp import sample_image_2d
 
@@ -40,12 +41,13 @@ def rotate_image_2d(image: torch.Tensor, angles: float | torch.Tensor) -> torch.
     -------
     rotated_image: torch.Tensor
         Rotated image. Shape is `(..., h, w)`.
-    """
 
+    """
     if not isinstance(angles, torch.Tensor):
         angles = torch.tensor([angles], device=image.device)
     h, w = image.shape[-2:]
-    center = torch.tensor([h // 2, w // 2], device=image.device)
+    # center = torch.tensor([h // 2, w // 2], device=image.device) # Alternative center
+    center = _get_dft_center(image_shape=(h, w), device=image.device, rfft=False)
 
     coords = coordinate_grid(
         image_shape=(h, w),
@@ -82,7 +84,6 @@ def _rotation_matrix_from_angles(angles: torch.Tensor) -> torch.Tensor:
         Rotation matrices of shape `(..., 2, 2)`.
 
     """
-
     rotation_matrices = torch.empty(
         angles.shape + (2, 2),
         device=angles.device,
@@ -96,3 +97,34 @@ def _rotation_matrix_from_angles(angles: torch.Tensor) -> torch.Tensor:
     rotation_matrices[..., 1, 0] = sin
     rotation_matrices[..., 1, 1] = cos
     return rotation_matrices
+
+
+def _get_dft_center(
+    image_shape: tuple[int, ...],
+    device: torch.device | None = None,
+    rfft: bool = True,
+    fftshifted: bool = True,
+) -> torch.LongTensor:
+    """Return the position of the center in an fftshifted DFT for a
+    given input shape.
+
+    This function makes explicit our convention used for selecting image
+    centers.
+
+    """
+    fft_center = torch.zeros(size=(len(image_shape),), device=device)
+    image_shape = torch.as_tensor(image_shape).float()
+    if rfft is True:
+        image_shape = torch.tensor(_get_rfft_shape(image_shape), device=device)
+    if fftshifted is True:
+        fft_center = torch.div(image_shape, 2, rounding_mode="floor")
+    if rfft is True:
+        fft_center[-1] = 0
+    return fft_center.long()
+
+
+def _get_rfft_shape(input_shape: Sequence[int]) -> tuple[int]:
+    """Get the output shape of an rfft on an input of input_shape."""
+    rfft_shape = list(input_shape)
+    rfft_shape[-1] = int((rfft_shape[-1] / 2) + 1)
+    return tuple(rfft_shape)

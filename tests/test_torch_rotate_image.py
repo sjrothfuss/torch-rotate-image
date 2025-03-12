@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 from torch_rotate_image import rotate_image_2d
 from torch_rotate_image.rotate_image_2d import _get_dft_center
 
-
 TOLERANCE = 1e-6
 
 
