@@ -1,3 +1,24 @@
+"""Module for rotating 2D images using PyTorch.
+
+This module provides functions for rotating 2D images as PyTorch
+tensors. The main function `rotate_image_2d` allows rotating images by
+arbitrary angles while maintaining the original image dimensions.
+
+Functions
+---------
+rotate_image_2d : Rotate a 2D image by specified angle(s)
+_rotation_matrix_from_angles : Create 2D rotation matrices from angles
+in degrees
+
+Notes
+-----
+- All rotations are performed clockwise around the center of the image
+- Input angles are specified in degrees
+- The module supports batch processing of rotations with different
+  angles
+
+"""
+
 import torch
 import einops
 from torch_grid_utils import coordinate_grid
@@ -5,15 +26,15 @@ from torch_image_lerp import sample_image_2d
 
 
 def rotate_image_2d(image: torch.Tensor, angles: float | torch.Tensor) -> torch.Tensor:
-    """Rotate a 2D image by a given angle or angles.
+    """Rotate a 2D tensor by a given angle or angles.
 
     Parameters
     ----------
     image: torch.Tensor
         2D image to rotate. Shape should be `(h, w)`.
     angles: float | torch.Tensor
-        Float angle or `(..., )` array of float angles in degrees by which to rotate the
-        image.
+        Float angle or `(..., )` array of float angles in degrees by
+        which to rotate the image.
 
     Returns
     -------
