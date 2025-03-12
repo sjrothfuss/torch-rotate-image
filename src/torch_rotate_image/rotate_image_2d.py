@@ -19,9 +19,9 @@ Notes
 
 """
 
+from typing import Sequence
 import torch
 import einops
-from typing import Sequence
 from torch_grid_utils import coordinate_grid
 from torch_image_lerp import sample_image_2d
 
@@ -104,7 +104,7 @@ def _get_dft_center(
     device: torch.device | None = None,
     rfft: bool = True,
     fftshifted: bool = True,
-) -> torch.LongTensor:
+) -> torch.Tensor:
     """Return the position of the center in an fftshifted DFT for a
     given input shape.
 
@@ -113,17 +113,17 @@ def _get_dft_center(
 
     """
     fft_center = torch.zeros(size=(len(image_shape),), device=device)
-    image_shape = torch.as_tensor(image_shape).float()
+    shape_tensor = torch.as_tensor(image_shape).float()
     if rfft is True:
-        image_shape = torch.tensor(_get_rfft_shape(image_shape), device=device)
+        shape_tensor = torch.tensor(_get_rfft_shape(shape_tensor), device=device)
     if fftshifted is True:
-        fft_center = torch.div(image_shape, 2, rounding_mode="floor")
+        fft_center = torch.div(shape_tensor, 2, rounding_mode="floor")
     if rfft is True:
         fft_center[-1] = 0
     return fft_center.long()
 
 
-def _get_rfft_shape(input_shape: Sequence[int]) -> tuple[int]:
+def _get_rfft_shape(input_shape: Sequence[int] | torch.Tensor) -> tuple[int, ...]:
     """Get the output shape of an rfft on an input of input_shape."""
     rfft_shape = list(input_shape)
     rfft_shape[-1] = int((rfft_shape[-1] / 2) + 1)
