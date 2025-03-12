@@ -3,7 +3,10 @@
 import torch
 import matplotlib.pyplot as plt
 from torch_rotate_image import rotate_image_2d
+<<<<<<< HEAD
 from torch_rotate_image.rotate_image_2d import _get_dft_center
+=======
+>>>>>>> parent of bc538e4 (Reconciling test conflicts)
 
 TOLERANCE = 1e-6
 
@@ -79,10 +82,3 @@ def test_rotate_image_2d_circular_symmetry() -> None:
         rotate_image_2d(image, theta - 360),
         atol=TOLERANCE,
     )
-
-
-def test_get_dft_center() -> None:
-    """Test that the center of the DFT is calculated correctly."""
-    h, w = 10, 10
-    center = _get_dft_center(image_shape=(h, w), rfft=False)
-    assert torch.equal(center, torch.tensor((5, 5)))
