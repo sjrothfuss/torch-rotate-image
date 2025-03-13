@@ -46,7 +46,7 @@ def test_rotate_image_2d_rotations() -> None:
     image = torch.linspace(0.5, 1, steps=3).repeat(3, 1)
     angles = torch.tensor([0.0, 42.0])
     rotated_image = rotate_image_2d(image, angles)
-    true_tensor = torch.tensor(
+    expected_tensor = torch.tensor(
         [
             [
                 [0.50, 0.75, 1.00],
@@ -54,13 +54,13 @@ def test_rotate_image_2d_rotations() -> None:
                 [0.50, 0.75, 1.00],
             ],
             [
-                [0.0000000, 0.5827173, 0.0000000],
-                [0.5642138, 0.7500000, 0.9357861],
                 [0.0000000, 0.9172826, 0.0000000],
+                [0.5642138, 0.7500000, 0.9357861],
+                [0.0000000, 0.5827173, 0.0000000],
             ],
         ]
     )
-    assert torch.allclose(rotated_image, true_tensor, atol=TOLERANCE)
+    assert torch.allclose(rotated_image, expected_tensor, atol=TOLERANCE)
 
 
 def test_rotate_image_2d_circular_symmetry() -> None:

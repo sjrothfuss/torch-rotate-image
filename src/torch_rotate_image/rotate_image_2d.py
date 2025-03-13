@@ -12,7 +12,7 @@ in degrees
 
 Notes
 -----
-- All rotations are performed clockwise around the center of the image
+- All rotations are performed counter clockwise around image center
 - Input angles are specified in degrees
 - The module supports batch processing of rotations with different
   angles
@@ -83,6 +83,11 @@ def _rotation_matrix_from_angles(angles: torch.Tensor) -> torch.Tensor:
     rotation_matrices: torch.Tensor
         Rotation matrices of shape `(..., 2, 2)`.
 
+    Notes
+    -----
+    The rotation matrix is inverted to perform counter clockwise
+    rotations.
+
     """
     rotation_matrices = torch.empty(
         angles.shape + (2, 2),
@@ -96,6 +101,11 @@ def _rotation_matrix_from_angles(angles: torch.Tensor) -> torch.Tensor:
     rotation_matrices[..., 0, 1] = -sin
     rotation_matrices[..., 1, 0] = sin
     rotation_matrices[..., 1, 1] = cos
+
+    # Inverting the rotation matrix is required for a positive angle to
+    # rotate the image counter clockwise:
+    rotation_matrices = torch.inverse(rotation_matrices)
+
     return rotation_matrices
 
 
