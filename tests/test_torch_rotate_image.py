@@ -13,7 +13,7 @@ def display_tensor(tensor: torch.Tensor, title: str = "") -> None:
     if tensor.ndim == 3:
         tensor = tensor.squeeze(0)
     plt.figure()
-    plt.imshow(tensor.numpy(), cmap="viridis")
+    plt.imshow(tensor.numpy(), cmap="viridis", origin="lower")
     plt.title(title)
     plt.clim(0, 1)
     plt.colorbar()
